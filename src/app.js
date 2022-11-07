@@ -76,14 +76,20 @@ const tweets = [
 
 app.post('/sign-up', (req, res) => {
     const user = req.body;
+    if(!user.username || !user.avatar){
+        return res.status(400).send(`Todos os campos são obrigatórios!`);
+    }
     users.push(user);
-    res.send("OK");
+    res.status(201).send("OK");
 });
 
 app.post('/tweets', (req, res) => {
     const tweet = req.body;
+    if(!tweet.username || !tweet.tweet){
+        return res.status(400).send(`Todos os campos são obrigatórios!`);
+    }
     tweets.push(tweet);
-    res.send("OK");
+    res.status(201).send("OK");
 });
 
 app.get('/tweets', (req, res) => {
