@@ -6,7 +6,7 @@ app.use(cors());
 app.use(express.json());
 
 const users = [
-/*     {
+    {
         username: 'bobesponja', 
         avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info" 
     },
@@ -21,10 +21,10 @@ const users = [
     {
         username: 'sirigueijo', 
         avatar: "https://static.wikia.nocookie.net/wikiesponja/images/2/2d/Sr_Sirigueijo_de_Bob_Esponja.png/revision/latest?cb=20170325000158&path-prefix=pt-br" 
-    } */
+    }
 ];
 const tweets = [
-/*     {
+    {
         username: "bobesponja",
         tweet: "eu amo o hub"
     },
@@ -71,7 +71,7 @@ const tweets = [
     {
         username: "sirigueijo",
         tweet: "eu sou mão de vaca"
-    } */
+    }
 ];
 
 app.post('/sign-up', (req, res) => {
@@ -106,6 +106,20 @@ app.get('/tweets', (req, res) => {
         });
     }
     res.send(answer);
+});
+
+app.get('/tweets/:username', (req, res) => {
+    const username = req.params.username;
+    const user = users.find((element) => element.username === username);
+    if (user === undefined){
+        return res.send(`Usuário não encontrado`);
+    }
+    const avatar = user.avatar;
+    const filteredTweets = tweets.filter((element) => element.username === username);
+    for (let i=0; i<filteredTweets.length;i++){
+        filteredTweets[i].avatar = avatar;
+    }
+    res.send(filteredTweets);
 });
 
 app.listen(5005);
